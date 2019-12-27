@@ -13,6 +13,9 @@ class Ui(QMainWindow):
         self.Score_2 = 0
         self.Step_1 = 0
         self.Step_2 = 0
+
+        self.updateStep(1, self.Step_1)
+        self.updateStep(2, self.Step_2)
         
         self.initUI()
 
@@ -20,21 +23,11 @@ class Ui(QMainWindow):
         self.setWindowTitle("Board Game")
         self.setWindowIcon(QtGui.QIcon('icon.jpg'))
 
-        #self.label_1 = QtWidgets.QLabel(self)
         self.score_1.setText("SCORE_1: " + str(self.Score_1))
-        #self.label_1.move(50,50)
-        
-        #self.label_2 = QtWidgets.QLabel(self)
         self.score_2.setText("SCORE_2: " + str(self.Score_2))
-        #self.label_2.move(50,75)
 
-        #self.label_3 = QtWidgets.QLabel(self)
         self.step_1.setText("STEP_1: " + str(self.Step_1))
-        #self.label_3.move(50,125)
-        
-        #self.label_4 = QtWidgets.QLabel(self)
         self.step_2.setText("STEP_2: " + str(self.Step_2))
-        #self.label_4.move(50,150)
         
         self.DICE_1.clicked.connect(self.button_clicked_1)
         self.DICE_2.clicked.connect(self.button_clicked_2)
