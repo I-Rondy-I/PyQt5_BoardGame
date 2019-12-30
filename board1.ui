@@ -415,9 +415,9 @@ border-radius: 15px;</string>
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>640</y>
-      <width>93</width>
-      <height>28</height>
+      <y>600</y>
+      <width>75</width>
+      <height>75</height>
      </rect>
     </property>
     <property name="palette">
@@ -511,17 +511,21 @@ border-radius: 15px;</string>
       </disabled>
      </palette>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(Resources/Dice/d1_0.png);
+border-radius: 15px;</string>
+    </property>
     <property name="text">
-     <string>DICE_1</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="DICE_2">
     <property name="geometry">
      <rect>
-      <x>890</x>
-      <y>640</y>
-      <width>93</width>
-      <height>28</height>
+      <x>910</x>
+      <y>600</y>
+      <width>75</width>
+      <height>75</height>
      </rect>
     </property>
     <property name="palette">
@@ -642,8 +646,12 @@ border-radius: 15px;</string>
       </disabled>
      </palette>
     </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(Resources/Dice/d2_0.png);
+border-radius: 15px;</string>
+    </property>
     <property name="text">
-     <string>DICE_2</string>
+     <string/>
     </property>
    </widget>
    <widget class="QPushButton" name="b1_11">
@@ -2217,6 +2225,23 @@ border-radius: 15px;</string>
      <string>TextLabel</string>
     </property>
    </widget>
+   <widget class="QPushButton" name="newGame">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>630</y>
+      <width>141</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-image: url(Resources/newGame.png);
+border-radius: 15px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -2232,6 +2257,9 @@ border-radius: 15px;</string>
  </widget>
  <resources>
   <include location="Theme.qrc"/>
+  <include location="Resources/Dice/Dice_1.qrc"/>
+  <include location="Resources/Dice/Dice_2.qrc"/>
+  <include location="Resources/newGame.qrc"/>
   <include location="player_1.qrc"/>
   <include location="player_2.qrc"/>
  </resources>

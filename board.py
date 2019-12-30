@@ -2,6 +2,7 @@ from PyQt5 import QtWidgets, uic, QtGui
 from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt5.QtCore import pyqtSlot
 from random import randint
+from PyQt5 import QtTest
 import sys
 
 class Ui(QMainWindow):
@@ -16,6 +17,9 @@ class Ui(QMainWindow):
 
         self.updateStep(1, self.Step_1)
         self.updateStep(2, self.Step_2)
+
+        self.DICE_2.hide()
+        self.newGame.hide()
         
         self.initUI()
 
@@ -31,6 +35,8 @@ class Ui(QMainWindow):
         
         self.DICE_1.clicked.connect(self.button_clicked_1)
         self.DICE_2.clicked.connect(self.button_clicked_2)
+
+        self.newGame.clicked.connect(self.NewGame)
 
     def updateStep(self, flag, step):
         player_1 = [self.b1_0,self.b1_1,self.b1_2,self.b1_3,self.b1_4,self.b1_5,
@@ -51,46 +57,85 @@ class Ui(QMainWindow):
                 button.hide()
             player_2[step].show()
         
-        
     @pyqtSlot()
     def button_clicked_1(self):
         print("clicked_1")
+        
         random = randint(1,6)
+        QtTest.QTest.qWait(150)
 
-        self.Score_1 += random
-        self.Step_1 += random
+        self.DICE_1.setStyleSheet( "QPushButton {border-image: url(Resources/Dice/d1_" + str(random) + ".png); border-radius: 15px;}" )
+  
+        while random != 0:
+            self.Step_1 += 1
+            random -= 1
 
-        if self.Step_1 > 21:
-            self.Step_1 = 21
+            if self.Step_1 > 21:
+                self.Step_1 = 21
+            
+            self.updateStep(1, self.Step_1)
+            QtTest.QTest.qWait(500)
+
         if self.Step_1 == 4:
             self.Step_1 = 8
+            self.updateStep(1, self.Step_1)
         if self.Step_1 == 12:
             self.Step_1 = 16
-        
-        self.updateStep(1, self.Step_1)
+            self.updateStep(1, self.Step_1)
 
         self.score_1.setText("SCORE_1: " + str(self.Score_1))
         self.step_1.setText("STEP_1: " + str(self.Step_1))
 
+        if self.Step_1 == 21:
+            self.newGame.show()
+        else:
+            self.DICE_1.hide()
+            self.DICE_2.show()
+
     @pyqtSlot()
     def button_clicked_2(self):
         print("clicked_2")
+        
         random = randint(1,6)
+        QtTest.QTest.qWait(150)
 
-        self.Score_2 += random
-        self.Step_2 += random
+        self.DICE_2.setStyleSheet( "QPushButton {border-image: url(Resources/Dice/d2_" + str(random) + ".png); border-radius: 15px;}" )
 
-        if self.Step_2 > 21:
-            self.Step_2 = 21
+        while random != 0:
+            self.Step_2 += 1
+            random -= 1
+
+            if self.Step_2 > 21:
+                self.Step_2 = 21
+            
+            self.updateStep(2, self.Step_2)
+            QtTest.QTest.qWait(500)
+
         if self.Step_2 == 4:
             self.Step_2 = 8
+            self.updateStep(2, self.Step_2)
         if self.Step_2 == 12:
             self.Step_2 = 16
-            
-        self.updateStep(2, self.Step_2)
+            self.updateStep(2, self.Step_2)
 
         self.score_2.setText("SCORE_2: " + str(self.Score_2))
         self.step_2.setText("STEP_2: " + str(self.Step_2))
+
+        if self.Step_2 == 21:
+            self.newGame.show()
+        else:
+            self.DICE_2.hide()
+            self.DICE_1.show()
+
+    @pyqtSlot()
+    def NewGame(self):
+        self.Score_1 = 0
+        self.Score_2 = 0
+        self.Step_1 = 0
+        self.Step_2 = 0
+        
+        self.updateStep(1, self.Step_1)
+        self.updateStep(2, self.Step_2)
 
 def window():
     app = QApplication(sys.argv)
