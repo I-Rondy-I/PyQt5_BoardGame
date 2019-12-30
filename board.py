@@ -20,6 +20,9 @@ class Ui(QMainWindow):
 
         self.DICE_2.hide()
         self.newGame.hide()
+
+        self.playerWins.hide()
+        self.Wins.hide()
         
         self.initUI()
 
@@ -88,6 +91,13 @@ class Ui(QMainWindow):
 
         if self.Step_1 == 21:
             self.newGame.show()
+            self.DICE_1.hide()
+
+            self.playerWins.setText("GREEN")
+            self.playerWins.setStyleSheet( "QLabel {color: green;}" )
+
+            self.playerWins.show()
+            self.Wins.show()
         else:
             self.DICE_1.hide()
             self.DICE_2.show()
@@ -123,6 +133,13 @@ class Ui(QMainWindow):
 
         if self.Step_2 == 21:
             self.newGame.show()
+            self.DICE_2.hide()
+
+            self.playerWins.setText("RED")
+            self.playerWins.setStyleSheet( "QLabel {color: red;}" )
+
+            self.playerWins.show()
+            self.Wins.show()
         else:
             self.DICE_2.hide()
             self.DICE_1.show()
@@ -136,6 +153,13 @@ class Ui(QMainWindow):
         
         self.updateStep(1, self.Step_1)
         self.updateStep(2, self.Step_2)
+
+        self.newGame.hide()
+
+        self.DICE_1.show()
+
+        self.Wins.hide()
+        self.playerWins.hide()
 
 def window():
     app = QApplication(sys.argv)
