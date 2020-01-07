@@ -102,6 +102,8 @@ class Ui(QMainWindow):
             self.DICE_1.hide()
             self.DICE_2.show()
 
+        self.DICE_1.setStyleSheet( "QPushButton {border-image: url(Resources/Dice/d1_0.png); border-radius: 15px;}" )
+
     @pyqtSlot()
     def button_clicked_2(self):
         print("clicked_2")
@@ -144,12 +146,20 @@ class Ui(QMainWindow):
             self.DICE_2.hide()
             self.DICE_1.show()
 
+        self.DICE_2.setStyleSheet( "QPushButton {border-image: url(Resources/Dice/d2_0.png); border-radius: 15px;}" )
+
     @pyqtSlot()
     def NewGame(self):
         self.Score_1 = 0
         self.Score_2 = 0
         self.Step_1 = 0
         self.Step_2 = 0
+
+        self.score_1.setText("SCORE_1: " + str(self.Score_1))
+        self.score_2.setText("SCORE_2: " + str(self.Score_2))
+
+        self.step_1.setText("STEP_1: " + str(self.Step_1))
+        self.step_2.setText("STEP_2: " + str(self.Step_2))
         
         self.updateStep(1, self.Step_1)
         self.updateStep(2, self.Step_2)
