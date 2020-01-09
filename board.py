@@ -10,8 +10,6 @@ class Ui(QMainWindow):
         super(Ui,self).__init__()
         uic.loadUi('board1.ui', self)
 
-        self.Score_1 = 0
-        self.Score_2 = 0
         self.Step_1 = 0
         self.Step_2 = 0
 
@@ -30,11 +28,10 @@ class Ui(QMainWindow):
         self.setWindowTitle("Board Game")
         self.setWindowIcon(QtGui.QIcon('icon.jpg'))
 
-        self.score_1.setText("SCORE_1: " + str(self.Score_1))
-        self.score_2.setText("SCORE_2: " + str(self.Score_2))
-
         self.step_1.setText("STEP_1: " + str(self.Step_1))
         self.step_2.setText("STEP_2: " + str(self.Step_2))
+
+        self.bonusLabel.hide()
         
         self.DICE_1.clicked.connect(self.button_clicked_1)
         self.DICE_2.clicked.connect(self.button_clicked_2)
@@ -62,8 +59,6 @@ class Ui(QMainWindow):
         
     @pyqtSlot()
     def button_clicked_1(self):
-        print("clicked_1")
-        
         random = randint(1, 6)
         QtTest.QTest.qWait(150)
 
@@ -80,13 +75,14 @@ class Ui(QMainWindow):
             QtTest.QTest.qWait(500)
 
         if self.Step_1 == 4:
+            QtTest.QTest.qWait(666)
             self.Step_1 = 8
             self.updateStep(1, self.Step_1)
         if self.Step_1 == 12:
+            QtTest.QTest.qWait(666)
             self.Step_1 = 16
             self.updateStep(1, self.Step_1)
 
-        self.score_1.setText("SCORE_1: " + str(self.Score_1))
         self.step_1.setText("STEP_1: " + str(self.Step_1))
 
         if self.Step_1 == 21:
@@ -104,6 +100,8 @@ class Ui(QMainWindow):
 
         self.DICE_1.setStyleSheet( "QPushButton {border-image: url(Resources/Dice/d1_0.png); border-radius: 15px;}" )
 
+        QtTest.QTest.qWait(666)
+
         if self.Step_1 == 9 or self.Step_1 == 20:
             self.Step_1 = self.red(1, self.Step_1)
         elif self.Step_1 == 5 or self.Step_1 == 13:
@@ -114,8 +112,6 @@ class Ui(QMainWindow):
 
     @pyqtSlot()
     def button_clicked_2(self):
-        print("clicked_2")
-        
         random = randint(1,6)
         QtTest.QTest.qWait(150)
 
@@ -132,13 +128,14 @@ class Ui(QMainWindow):
             QtTest.QTest.qWait(500)
 
         if self.Step_2 == 4:
+            QtTest.QTest.qWait(666)
             self.Step_2 = 8
             self.updateStep(2, self.Step_2)
         if self.Step_2 == 12:
+            QtTest.QTest.qWait(666)
             self.Step_2 = 16
             self.updateStep(2, self.Step_2)
 
-        self.score_2.setText("SCORE_2: " + str(self.Score_2))
         self.step_2.setText("STEP_2: " + str(self.Step_2))
 
         if self.Step_2 == 21:
@@ -156,6 +153,8 @@ class Ui(QMainWindow):
 
         self.DICE_2.setStyleSheet( "QPushButton {border-image: url(Resources/Dice/d2_0.png); border-radius: 15px;}" )
 
+        QtTest.QTest.qWait(666)
+
         if self.Step_2 == 9 or self.Step_2 == 20:
             self.Step_2 = self.red(2, self.Step_2)
         elif self.Step_2 == 5 or self.Step_2 == 13:
@@ -166,6 +165,11 @@ class Ui(QMainWindow):
     def red(self, player, Step):
         randomRed = randint(-3, -1)
         rand = randomRed
+
+        self.bonusLabel.setText("BACK: " + str(-rand) + " steps")
+        self.bonusLabel.setStyleSheet( "QLabel {color: red;}" )
+        self.bonusLabel.show()
+        
         QtTest.QTest.qWait(150)
 
         if player == 1:
@@ -194,14 +198,18 @@ class Ui(QMainWindow):
                 self.updateStep(player, Step)
                 QtTest.QTest.qWait(500)
         
-        self.bonusLabel.setText("BACK: " + str(-rand) + " steps")
-        self.bonusLabel.setStyleSheet( "QLabel {color: red;}" )
+        self.bonusLabel.hide()
 
         return Step 
 
     def green(self, player, Step):
         randomGreen = randint(1, 3)
         rand = randomGreen
+
+        self.bonusLabel.setText("NEXT: " + str(rand) + " steps")
+        self.bonusLabel.setStyleSheet( "QLabel {color: green;}" )
+        self.bonusLabel.show()
+        
         QtTest.QTest.qWait(150)
 
         if player == 1:
@@ -219,8 +227,8 @@ class Ui(QMainWindow):
             
         if player == 2:
             while randomGreen != 0:
-                Step += -1
-                randomGreen += 1
+                Step += 1
+                randomGreen -= 1
 
                 if Step > 21:
                     Step = 21
@@ -230,8 +238,7 @@ class Ui(QMainWindow):
                 self.updateStep(player, Step)
                 QtTest.QTest.qWait(500)
         
-        self.bonusLabel.setText("NEXT: " + str(rand) + " steps")
-        self.bonusLabel.setStyleSheet( "QLabel {color: green;}" )
+        self.bonusLabel.hide()
 
         return Step
 
@@ -241,24 +248,18 @@ class Ui(QMainWindow):
             Step = self.red(player, Step)
         else:
             Step = self.green(player, Step)
-        
-        #self.bonusLabel.setText("purple")
-        #self.bonusLabel.setStyleSheet( "QLabel {color: purple;}" )
 
         return Step
 
     @pyqtSlot()
     def NewGame(self):
-        self.Score_1 = 0
-        self.Score_2 = 0
         self.Step_1 = 0
         self.Step_2 = 0
 
-        self.score_1.setText("SCORE_1: " + str(self.Score_1))
-        self.score_2.setText("SCORE_2: " + str(self.Score_2))
-
         self.step_1.setText("STEP_1: " + str(self.Step_1))
         self.step_2.setText("STEP_2: " + str(self.Step_2))
+
+        self.bonusLabel.setText("")
         
         self.updateStep(1, self.Step_1)
         self.updateStep(2, self.Step_2)
